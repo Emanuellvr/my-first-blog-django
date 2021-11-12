@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-s^070k^va03j$y3pu^95a-jsbc5bmp!90_rh&p+vgxh!h1h37z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -67,6 +67,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
