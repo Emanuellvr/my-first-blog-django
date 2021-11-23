@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -128,3 +128,25 @@ STATIC_ROOT = BASE_DIR, 'static'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ---------------------------------------------------------------------------------------------------------
+
+
+# Excempt list - URL paths that doesn't need Keycloak Authorization 
+KEYCLOAK_BEARER_AUTHENTICATION_EXEMPT_PATHS = [
+    'admin', 'accounts',
+    ]
+CONFIG_DIR = os.path.join(os.path.dirname(__file__),os.pardir)
+KEYCLOAK_CLIENT_PUBLIC_KEY = KEYCLOAK_CLIENT_PUBLIC_KEY = """-----BEGIN PUBLIC KEY-----
+eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlM2NlMDcxOS0wZjhkLTQwYTgtYjY5Zi0xNjE4NTZmMDYxZGMifQ.eyJleHAiOjAsImlhdCI6MTYzNzY5NzY5OSwianRpIjoiNzYwZTAxZWUtOGZjMC00MjQ4LTkxN2MtZDhmYmEwY2MxM2I3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL215cmVhbG0iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXV0aC9yZWFsbXMvbXlyZWFsbSIsInR5cCI6IlJlZ2lzdHJhdGlvbkFjY2Vzc1Rva2VuIiwicmVnaXN0cmF0aW9uX2F1dGgiOiJhdXRoZW50aWNhdGVkIn0.l6o55dHgaagx1yt0P8ePMKYrsEIY0XJQqhwxdrB-psc
+-----END PUBLIC KEY-----"""
+KEYCLOAK_CONFIG = {
+    'KEYCLOAK_REALM': 'myrealm',
+    'KEYCLOAK_CLIENT_ID': 'myclient',
+    'KEYCLOAK_DEFAULT_ACCESS': 'ALLOW', # DENY or ALLOW
+    'KEYCLOAK_AUTHORIZATION_CONFIG': os.path.join(CONFIG_DIR , 'authorization-config.json'),
+    'KEYCLOAK_METHOD_VALIDATE_TOKEN': 'DECODE',
+    'KEYCLOAK_SERVER_URL': 'http://KEYCLOAK_HOST:8088/auth/',
+    'KEYCLOAK_CLIENT_SECRET_KEY': '76a4ddfa-d9ab-49b7-a880-f41118db0119',
+    'KEYCLOAK_CLIENT_PUBLIC_KEY': KEYCLOAK_CLIENT_PUBLIC_KEY, 
+}
